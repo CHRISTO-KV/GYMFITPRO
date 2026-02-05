@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import { useEffect, useState } from "react";
-import api, { SERVER_URL } from "../../api/api";
+import api, { SERVER_URL, getImageUrl } from "../../api/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE = SERVER_URL;
@@ -142,7 +142,7 @@ export default function WorkoutVideos() {
                       height="240"
                       controls
                       preload="metadata"
-                      poster={v.thumbnail ? `${API_BASE}${v.thumbnail}` : ""}
+                      poster={v.thumbnail ? getImageUrl(v.thumbnail) : ""} /** USE getImageUrl */
                       style={{ display: "block", objectFit: "cover" }}
                     >
                       <source src={`${API_BASE}${v.videoUrl}`} type="video/mp4" />

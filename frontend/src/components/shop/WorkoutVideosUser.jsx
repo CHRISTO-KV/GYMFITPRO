@@ -1,6 +1,6 @@
 import { Box, Typography, Chip, Toolbar, Card, CardContent, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import api, { SERVER_URL } from "../../api/api";
+import api, { SERVER_URL, getImageUrl } from "../../api/api"; // Import getImageUrl
 import { motion } from "framer-motion";
 
 const API_BASE = SERVER_URL;
@@ -19,7 +19,7 @@ export default function WorkoutVideosUser() {
       setVideos(res.data || []);
     } catch (err) {
       console.error(err);
-      alert("❌ Failed to load videos");
+      // alert("❌ Failed to load videos");
     }
   };
 
@@ -80,7 +80,7 @@ export default function WorkoutVideosUser() {
 
                     {/* VIDEO PLAYER */}
                     <Box sx={{ borderRadius: 3, overflow: "hidden", mb: 1.5 }}>
-                      <video width="100%" height="200" controls preload="metadata" poster={v.thumbnail ? `${API_BASE}${v.thumbnail}` : ""}>
+                      <video width="100%" height="200" controls preload="metadata" poster={v.thumbnail ? getImageUrl(v.thumbnail) : ""}>
                         <source src={`${API_BASE}${v.videoUrl}`} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
