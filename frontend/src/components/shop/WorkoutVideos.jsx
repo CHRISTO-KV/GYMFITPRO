@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import { useEffect, useState } from "react";
-import api from "../../api/api";
+import api, { SERVER_URL } from "../../api/api";
 import { motion, AnimatePresence } from "framer-motion";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = SERVER_URL;
 
 // Animation Variants
 const containerVariants = {

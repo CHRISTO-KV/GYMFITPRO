@@ -18,11 +18,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { useCart } from "../../context/CartContext";
-import api from "../../api/api";
+import api, { IMG_BASE_URL } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const BASE_IMG = "http://localhost:5000/uploads/";
+const BASE_IMG = IMG_BASE_URL;
 
 // Animation Variants
 const containerVariants = {

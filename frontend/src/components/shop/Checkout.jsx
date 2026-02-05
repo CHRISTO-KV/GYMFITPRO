@@ -19,7 +19,7 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentIcon from '@mui/icons-material/Payment';
 import LockIcon from '@mui/icons-material/Lock';
-import api from "../../api/api";
+import api, { IMG_BASE_URL } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useState } from "react";
@@ -28,7 +28,7 @@ import { Elements, CardElement, useStripe, useElements } from "@stripe/react-str
 import stateDistricts from "../../data/indianStateDistricts";
 import { motion } from "framer-motion";
 
-const BASE_IMG = "http://localhost:5000/uploads/";
+const BASE_IMG = IMG_BASE_URL;
 import { useTheme } from "@mui/material";
 
 // Replace with your actual Publishable Key

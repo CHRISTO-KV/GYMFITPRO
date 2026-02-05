@@ -1,7 +1,14 @@
 import axios from "axios";
 
+export const SERVER_URL = import.meta.env.VITE_API_BASE_URL
+  ? import.meta.env.VITE_API_BASE_URL.replace("/api", "")
+  : "http://localhost:5000";
+
+export const API_BASE_URL = `${SERVER_URL}/api`;
+export const IMG_BASE_URL = `${SERVER_URL}/uploads/`;
+
 const api = axios.create({
-  baseURL: "http://localhost:5000/api", // ✔ keep only server URL
+  baseURL: API_BASE_URL,
 });
 
 // Attach userId from sessionStorage to every request so backend auth middleware can use it

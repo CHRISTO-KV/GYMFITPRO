@@ -26,7 +26,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../api/api";
+import api, { IMG_BASE_URL } from "../../api/api";
 import OrderMap from "../common/OrderMap";
 import MapIcon from "@mui/icons-material/Map";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -267,7 +267,7 @@ export default function MyOrdersUser() {
                   {(order.items || []).map((item, idx) => {
                     const pid = item.productId?._id || item.productId;
                     const cleanImage = item.image?.replace(/^\/?uploads\//, "") || null;
-                    const imgUrl = cleanImage ? `http://localhost:5000/uploads/${cleanImage}` : "https://via.placeholder.com/150";
+                    const imgUrl = cleanImage ? `${IMG_BASE_URL}${cleanImage}` : "https://via.placeholder.com/150";
 
                     return (
                       <Grid item xs={12} sm={6} md={4} key={idx}>

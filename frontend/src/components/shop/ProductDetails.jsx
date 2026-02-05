@@ -24,13 +24,13 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FlashOnIcon from '@mui/icons-material/FlashOn';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
-import api from "../../api/api";
+import api, { IMG_BASE_URL } from "../../api/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 
-const BASE_UPLOAD_URL = "http://localhost:5000/uploads/";
+const BASE_UPLOAD_URL = IMG_BASE_URL;
 
 // Animation Variants
 const fadeIn = {

@@ -25,11 +25,11 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
-import api from "../../api/api";
+import api, { IMG_BASE_URL } from "../../api/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 
-const BASE_IMG = "http://localhost:5000/uploads/";
+const BASE_IMG = IMG_BASE_URL;
 
 const MotionPaper = motion.create(Paper);
 const MotionCard = motion.create(Card);

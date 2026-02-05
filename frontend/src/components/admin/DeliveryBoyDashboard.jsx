@@ -30,7 +30,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import MapIcon from "@mui/icons-material/Map";
 import { useEffect, useState, useCallback } from "react";
-import api from "../../api/api";
+import api, { IMG_BASE_URL } from "../../api/api";
 import OrderMap from "../common/OrderMap";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -265,7 +265,7 @@ export default function DeliveryBoyDashboard() {
                   {user.profileImage ? (
                     <Box
                       component="img"
-                      src={`http://localhost:5000/uploads/${user.profileImage}`}
+                      src={`${IMG_BASE_URL}${user.profileImage}`}
                       alt="Profile"
                       sx={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover" }}
                     />
@@ -450,7 +450,7 @@ export default function DeliveryBoyDashboard() {
                                 <Box key={i} sx={{ position: "relative" }}>
                                   <Box
                                     component="img"
-                                    src={item.image ? `http://localhost:5000/uploads/${item.image}` : "https://via.placeholder.com/50"}
+                                    src={item.image ? `${IMG_BASE_URL}${item.image}` : "https://via.placeholder.com/50"}
                                     sx={{ width: 40, height: 40, borderRadius: 1, objectFit: "cover", border: "1px solid #333" }}
                                   />
                                   <Box sx={{

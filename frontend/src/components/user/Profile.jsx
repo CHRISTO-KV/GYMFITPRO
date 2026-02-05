@@ -13,7 +13,7 @@ import {
     IconButton
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
-import axios from "axios";
+import api, { IMG_BASE_URL } from "../../api/api";
 import { motion } from "framer-motion";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -45,7 +45,7 @@ export default function Profile() {
                 mobile: user.mobile || ""
             });
             if (user.profileImage) {
-                setPreview(`http://localhost:5000/uploads/${user.profileImage}`);
+                setPreview(`${IMG_BASE_URL}${user.profileImage}`);
             }
         }
     }, [user]);
@@ -88,12 +88,11 @@ export default function Profile() {
         try {
             const config = {
                 headers: {
-                    "x-user-id": user._id,
                     "Content-Type": "multipart/form-data"
                 }
             };
 
-            const res = await axios.put("http://localhost:5000/api/auth/profile", data, config);
+            const res = await api.put("/auth/profile", data, config);
 
             setMessage({ type: "success", text: "Profile updated successfully!" });
             login(res.data.user);

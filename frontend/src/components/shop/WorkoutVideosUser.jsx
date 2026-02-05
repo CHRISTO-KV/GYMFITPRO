@@ -1,9 +1,9 @@
 import { Box, Typography, Chip, Toolbar, Card, CardContent, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../../api/api";
+import api, { SERVER_URL } from "../../api/api";
 import { motion } from "framer-motion";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = SERVER_URL;
 
 export default function WorkoutVideosUser() {
   const [videos, setVideos] = useState([]);
