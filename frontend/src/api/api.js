@@ -7,6 +7,12 @@ export const SERVER_URL = import.meta.env.VITE_API_BASE_URL
 export const API_BASE_URL = `${SERVER_URL}/api`;
 export const IMG_BASE_URL = `${SERVER_URL}/uploads/`;
 
+export const getImageUrl = (path) => {
+  if (!path) return "/placeholder.jpg"; // Handle null/undefined
+  if (path.startsWith("data:") || path.startsWith("http")) return path;
+  return `${IMG_BASE_URL}${path}`;
+};
+
 const api = axios.create({
   baseURL: API_BASE_URL,
 });

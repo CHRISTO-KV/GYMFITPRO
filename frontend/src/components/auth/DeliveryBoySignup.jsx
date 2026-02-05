@@ -402,7 +402,6 @@ export default function DeliveryBoySignup() {
                 sx={{
                   textAlign: "center",
                   mt: 2,
-                  mt: 2,
                   cursor: "pointer",
                   color: "text.secondary",
                   "& span": { color: "primary.main", fontWeight: "bold" }

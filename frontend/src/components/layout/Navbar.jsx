@@ -20,7 +20,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useThemeContext } from "../../context/ThemeContext";
 import { useTheme } from "@mui/material";
-import { IMG_BASE_URL } from "../../api/api";
+import { IMG_BASE_URL, getImageUrl } from "../../api/api";
 
 
 
@@ -113,7 +113,7 @@ export default function Navbar() {
               width: 36,
               height: 36
             }}
-            src={user?.profileImage ? `${IMG_BASE_URL}${user.profileImage}` : undefined}
+            src={user?.profileImage ? getImageUrl(user.profileImage) : undefined}
           >
             {role?.[0]?.toUpperCase() || "U"}
           </Avatar>

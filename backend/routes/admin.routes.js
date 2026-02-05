@@ -4,11 +4,7 @@ const User = require("../model/User");
 const Product = require("../model/Product");
 const multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.get("/users", async (_, res) => res.json(await User.find()));
@@ -28,7 +24,11 @@ router.get("/products", async (_, res) => res.json(await Product.find().populate
 
 router.put("/products/:id", upload.array("images", 5), async (req, res) => {
   const data = { ...req.body };
-  if (req.files?.length) data.images = req.files.map((f) => f.filename);
+  if (req.files?.length) {
+    data.images = req.files.map((f) =>
+      `data:${f.mimetype};base64,${f.buffer.toString("base64")}`
+    );
+  }
   if (data.category === "null") data.category = null;
   const updated = await Product.findByIdAndUpdate(req.params.id, data, { new: true }).populate("category");
   if (!updated) return res.status(404).json({ message: "Product not found" });

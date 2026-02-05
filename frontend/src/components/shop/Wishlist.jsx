@@ -14,7 +14,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import api, { IMG_BASE_URL } from "../../api/api";
+import api, { IMG_BASE_URL, getImageUrl } from "../../api/api";
 import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -161,7 +161,7 @@ export default function Wishlist() {
                           component="img"
                           className="product-image"
                           height="250"
-                          image={product.images?.[0] ? BASE_UPLOAD_URL + product.images[0] : ""}
+                          image={product.images?.[0] ? getImageUrl(product.images[0]) : ""}
                           alt={product.name}
                           sx={{
                             objectFit: "cover",

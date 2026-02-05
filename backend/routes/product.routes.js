@@ -6,11 +6,8 @@ const multer = require("multer");
 const router = express.Router();
 
 // Multer config (same upload folder)
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
-});
-
+// Multer config (Memory Storage for Base64)
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 /* ================= ADD PRODUCT ================= */
@@ -18,9 +15,11 @@ router.post("/", upload.array("images", 5), async (req, res) => {
   try {
     const data = { ...req.body };
 
-    // Save uploaded image filenames
+    // Convert uploaded images to Base64
     if (req.files?.length) {
-      data.images = req.files.map((f) => f.filename);
+      data.images = req.files.map((f) =>
+        `data:${f.mimetype};base64,${f.buffer.toString("base64")}`
+      );
     }
 
     const product = await Product.create(data);

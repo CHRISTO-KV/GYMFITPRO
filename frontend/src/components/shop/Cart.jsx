@@ -18,7 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { useCart } from "../../context/CartContext";
-import api, { IMG_BASE_URL } from "../../api/api";
+import api, { IMG_BASE_URL, getImageUrl } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -263,7 +263,7 @@ function EmptyState() {
 
 function CartItem({ item, updateQty, removeItem }) {
   const imgFile = item.productId.images?.[0] || item.productId.image || null;
-  const imgUrl = imgFile ? BASE_IMG + imgFile.replace(/^\/?uploads\//, "") : "";
+  const imgUrl = imgFile ? getImageUrl(imgFile) : "";
 
   return (
     <motion.div variants={itemVariants} layout>

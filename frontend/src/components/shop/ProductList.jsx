@@ -16,7 +16,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import api, { IMG_BASE_URL } from "../../api/api";
+import api, { IMG_BASE_URL, getImageUrl } from "../../api/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -200,7 +200,7 @@ export default function ProductList() {
                   <CardMedia
                     component="img"
                     height="250"
-                    image={p.images?.length ? `${IMG_BASE_URL}${p.images[0]}` : FALLBACK_IMG}
+                    image={p.images?.length ? getImageUrl(p.images[0]) : FALLBACK_IMG}
                     alt={p.name}
                     sx={{
                       objectFit: "contain",

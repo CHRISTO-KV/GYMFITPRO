@@ -14,7 +14,7 @@ dist/
 build/
 
 # Backend specific
-backend/uploads/
+
 
 # Logs
 logs/
