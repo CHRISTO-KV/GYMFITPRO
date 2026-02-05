@@ -221,7 +221,7 @@ router.put("/profile", auth, upload.single("profileImage"), async (req, res) => 
     if (localArea) updateData.localArea = localArea;
 
     if (req.file) {
-      updateData.profileImage = req.file.filename;
+      updateData.profileImage = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
     } else if (req.body.deleteImage === "true") {
       updateData.profileImage = ""; // Clear image
     }

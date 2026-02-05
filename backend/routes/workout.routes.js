@@ -22,17 +22,36 @@ router.post("/upload", upload.fields([{ name: "video", maxCount: 1 }, { name: "t
 
     const { title, description, category, userId } = req.body;
 
+    // Process video (keep as file path)
+    const videoUrlPath = `/uploads/videos/${req.files.video[0].filename}`;
+
+    // Process thumbnail (convert to Base64)
+    let thumbnailUrl = "";
+    if (req.files.thumbnail) {
+      const thumbPath = req.files.thumbnail[0].path;
+      const thumbData = fs.readFileSync(thumbPath, { encoding: "base64" });
+      const mime = req.files.thumbnail[0].mimetype;
+      thumbnailUrl = `data:${mime};base64,${thumbData}`;
+
+      // Delete temporary thumbnail file
+      try { fs.unlinkSync(thumbPath); } catch (e) { console.warn("Failed to delete temp thumbnail", e); }
+    }
+
     const video = await Workout.create({
       title,
       description,
       category,
       userId,
-      videoUrl: `/uploads/videos/${req.files.video[0].filename}`,
-      thumbnail: req.files.thumbnail ? `/uploads/videos/${req.files.thumbnail[0].filename}` : ""
+      videoUrl: videoUrlPath,
+      thumbnail: thumbnailUrl
     });
 
     res.status(201).json({ message: "Video uploaded", video });
   } catch (err) {
+    // Cleanup video if DB save fails
+    if (req.files?.video) {
+      try { fs.unlinkSync(req.files.video[0].path); } catch (e) { }
+    }
     res.status(500).json({ message: "Upload failed", error: err.message });
   }
 });
@@ -79,8 +98,12 @@ router.put("/:id", upload.fields([{ name: "video", maxCount: 1 }, { name: "thumb
 
     // Handle new thumbnail file
     if (req.files?.thumbnail) {
-      // Delete old thumbnail if exists (optional logic can go here)
-      video.thumbnail = `/uploads/videos/${req.files.thumbnail[0].filename}`;
+      const thumbPath = req.files.thumbnail[0].path;
+      const thumbData = fs.readFileSync(thumbPath, { encoding: "base64" });
+      const mime = req.files.thumbnail[0].mimetype;
+      video.thumbnail = `data:${mime};base64,${thumbData}`;
+
+      try { fs.unlinkSync(thumbPath); } catch (e) { }
     }
 
     await video.save();
