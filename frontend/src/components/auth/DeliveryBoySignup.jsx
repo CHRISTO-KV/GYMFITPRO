@@ -179,9 +179,10 @@ export default function DeliveryBoySignup() {
         variants={containerVariants}
         elevation={10}
         sx={{
-          padding: "40px",
-          maxWidth: "800px", // Wider for 2-column layout
+          p: { xs: 3, md: 5 },
+          maxWidth: 800, // Wider for 2-column layout
           width: "100%",
+          mx: { xs: 2, md: 0 },
           bgcolor: "background.paper",
           color: "text.primary",
           border: "1px solid",

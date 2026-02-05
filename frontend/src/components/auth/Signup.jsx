@@ -105,8 +105,10 @@ export default function Signup() {
         animate="visible"
         variants={containerVariants}
         sx={{
-          width: 420,
-          p: 4,
+          width: "100%",
+          maxWidth: 420,
+          p: { xs: 3, md: 4 },
+          mx: 2,
           bgcolor: "background.paper",
           backdropFilter: "blur(20px)",
           borderRadius: 3,

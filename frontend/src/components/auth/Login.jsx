@@ -97,8 +97,10 @@ export default function Login({ isModal, onClose }) {
         animate="visible"
         variants={containerVariants}
         sx={{
-          width: 400,
-          p: 4,
+          width: "100%",
+          maxWidth: 400,
+          p: { xs: 3, md: 4 },
+          mx: 2,
           bgcolor: "background.paper",
           backdropFilter: "blur(20px)",
           borderRadius: 3,

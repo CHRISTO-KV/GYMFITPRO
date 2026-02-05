@@ -41,14 +41,15 @@ export default function Home() {
         animate="visible"
         variants={staggerContainer}
         sx={{
-          minHeight: "95vh",
-          background: (theme) => `linear-gradient(to bottom, rgba(0,0,0,0.3), ${theme.palette.background.default}), url(https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80)`,
+          minHeight: { xs: "85vh", md: "95vh" },
+          background: (theme) => `linear-gradient(to bottom, rgba(0,0,0,0.4), ${theme.palette.background.default}), url(https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
           display: "flex",
           alignItems: "center",
-          position: "relative"
+          position: "relative",
+          pt: { xs: 8, md: 0 } // Extra padding for mobile navbar
         }}
       >
         <Container maxWidth="lg">
@@ -57,19 +58,31 @@ export default function Home() {
               <motion.div variants={fadeInUp}>
                 <Typography variant="h1" sx={{
                   fontWeight: 900,
-                  fontSize: { xs: "3rem", md: "5.5rem" },
-                  lineHeight: 0.9,
-                  letterSpacing: "-2px",
+                  fontSize: { xs: "3.5rem", sm: "4.5rem", md: "6rem" }, // Responsive font size
+                  lineHeight: { xs: 1, md: 0.9 },
+                  letterSpacing: { xs: "-1px", md: "-2px" },
                   textTransform: "uppercase",
-                  mb: 2
+                  mb: 2,
+                  textShadow: "0 10px 30px rgba(0,0,0,0.5)"
                 }}>
                   Unleash Your <br />
-                  <Box component="span" sx={{ color: "transparent", WebkitTextStroke: (theme) => `2px ${theme.palette.primary.main}` }}>Inner Beast</Box>
+                  <Box component="span" sx={{
+                    color: "transparent",
+                    WebkitTextStroke: (theme) => `2px ${theme.palette.primary.main}`,
+                    textShadow: "none"
+                  }}>Inner Beast</Box>
                 </Typography>
               </motion.div>
 
               <motion.div variants={fadeInUp}>
-                <Typography variant="h5" sx={{ color: "text.secondary", mb: 4, maxWidth: "600px", fontWeight: 300 }}>
+                <Typography variant="h5" sx={{
+                  color: "rgba(255,255,255,0.8)",
+                  mb: 4,
+                  maxWidth: "600px",
+                  fontWeight: 400,
+                  fontSize: { xs: "1rem", md: "1.25rem" },
+                  lineHeight: 1.6
+                }}>
                   Premium supplements and gear designed for elite performance.
                   Elevate your training with the best in the industry.
                 </Typography>
@@ -88,10 +101,13 @@ export default function Home() {
                       color: "primary.contrastText",
                       fontWeight: 800,
                       fontSize: "1.1rem",
-                      px: 4,
+                      px: 5,
                       py: 1.5,
-                      borderRadius: 0,
-                      "&:hover": { bgcolor: "background.paper", color: "text.primary" }
+                      borderRadius: 1,
+                      width: { xs: "100%", sm: "auto" }, // Full width on mobile
+                      boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+                      "&:hover": { bgcolor: "white", color: "black", transform: "translateY(-2px)" },
+                      transition: "all 0.3s"
                     }}
                   >
                     Shop Now
@@ -102,14 +118,16 @@ export default function Home() {
                     variant="outlined"
                     size="large"
                     sx={{
-                      color: "text.primary",
-                      borderColor: "text.primary",
+                      color: "white",
+                      borderColor: "rgba(255,255,255,0.5)",
                       fontWeight: 800,
                       fontSize: "1.1rem",
-                      px: 4,
+                      px: 5,
                       py: 1.5,
-                      borderRadius: 0,
-                      "&:hover": { bgcolor: "action.hover", borderColor: "text.primary" }
+                      borderRadius: 1,
+                      width: { xs: "100%", sm: "auto" }, // Full width on mobile
+                      backdropFilter: "blur(5px)",
+                      "&:hover": { bgcolor: "rgba(255,255,255,0.1)", borderColor: "white" }
                     }}
                   >
                     My Orders
@@ -122,7 +140,7 @@ export default function Home() {
       </Box>
 
       {/* FEATURES SECTION */}
-      <Box sx={{ py: 10 }}>
+      <Box sx={{ py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -138,10 +156,10 @@ export default function Home() {
               ].map((feature, idx) => (
                 <Grid size={{ xs: 12, md: 4 }} key={idx}>
                   <Box sx={{
-                    p: 4,
+                    p: { xs: 4, md: 5 },
                     borderRadius: 4,
                     border: "1px solid rgba(255,255,255,0.1)",
-                    background: "rgba(255,255,255,0.03)",
+                    background: "rgba(25,25,25,0.4)", // Darker translucent bg
                     backdropFilter: "blur(10px)",
                     transition: "all 0.4s ease",
                     height: "100%",
@@ -154,8 +172,8 @@ export default function Home() {
                     "&:hover": {
                       borderColor: "primary.main",
                       transform: "translateY(-10px)",
-                      background: "action.hover",
-                      boxShadow: (theme) => `0 10px 30px -10px ${theme.palette.primary.main}40`
+                      background: "rgba(30,30,30,0.6)",
+                      boxShadow: (theme) => `0 20px 40px -10px ${theme.palette.primary.main}30`
                     },
                     "&::before": {
                       content: '""',
@@ -176,14 +194,17 @@ export default function Home() {
                     <Box sx={{
                       color: "primary.main",
                       mb: 3,
-                      filter: (theme) => `drop-shadow(0 0 10px ${theme.palette.primary.main}50)`
+                      p: 2,
+                      bgcolor: "rgba(255, 235, 59, 0.1)", // Subtle highlight behind icon
+                      borderRadius: "50%",
+                      display: "inline-flex"
                     }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h5" fontWeight={800} gutterBottom sx={{ letterSpacing: 1 }}>
+                    <Typography variant="h5" fontWeight={800} gutterBottom sx={{ letterSpacing: 0.5 }}>
                       {feature.title}
                     </Typography>
-                    <Typography color="#aaa" sx={{ lineHeight: 1.6 }}>
+                    <Typography color="text.secondary" sx={{ lineHeight: 1.6, fontSize: "0.95rem" }}>
                       {feature.desc}
                     </Typography>
                   </Box>
@@ -195,14 +216,14 @@ export default function Home() {
       </Box>
 
       {/* FEATURED PRODUCTS */}
-      <Box sx={{ py: 10, bgcolor: "background.paper" }}>
+      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "background.paper", borderRadius: { xs: "30px 30px 0 0", md: "50px 50px 0 0" }, mt: -5, position: "relative", zIndex: 2 }}>
         <Container maxWidth="lg">
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "end", mb: 6 }}>
+          <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, justifyContent: "space-between", alignItems: { xs: "flex-start", sm: "end" }, mb: 6, gap: 2 }}>
             <Box>
               <Typography variant="overline" color="primary" fontWeight={800} letterSpacing={2}>Only the Best</Typography>
-              <Typography variant="h3" fontWeight={900}>Featured Deals</Typography>
+              <Typography variant="h3" fontWeight={900} sx={{ fontSize: { xs: "2rem", md: "3rem" } }}>Featured Deals</Typography>
             </Box>
-            <Button component={Link} to="/products" endIcon={<ArrowForwardIcon />} sx={{ color: "text.primary" }}>View All</Button>
+            <Button component={Link} to="/products" endIcon={<ArrowForwardIcon />} sx={{ color: "text.primary", fontWeight: 700 }}>View All Products</Button>
           </Box>
 
           <Grid container spacing={4}>
@@ -212,28 +233,31 @@ export default function Home() {
               { name: "Pro Dumbbell Set", price: "₹999", img: dumbbellImg },
               { name: "Micronized Creatine", price: "₹699", img: opti }
             ].map((product, idx) => (
-              <Grid size={{ xs: 12, sm: 3, md: 3 }} key={idx}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={idx}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  transition={{ duration: 0.3, delay: idx * 0.1 }}
                   viewport={{ once: true }}
                   style={{ height: "100%" }}
                 >
-
                   <Card sx={{
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     bgcolor: "background.default",
                     color: "text.primary",
-                    borderRadius: 0,
+                    borderRadius: 4,
+                    boxShadow: "none",
+                    border: "1px solid",
+                    borderColor: "divider",
                     position: "relative",
                     overflow: "hidden",
                     "&:hover .overlay": { opacity: 1 },
                     "&:hover img": { transform: "scale(1.1)" }
                   }}>
-                    <Box sx={{ position: "relative", pt: "100%", overflow: "hidden" }}>
+                    <Box sx={{ position: "relative", pt: "100%", overflow: "hidden", bgcolor: "white" }}>
                       <CardMedia
                         component="img"
                         image={product.img}
@@ -245,8 +269,7 @@ export default function Home() {
                           width: "100%",
                           height: "100%",
                           objectFit: "contain",
-                          p: 2,
-                          bgcolor: "white",
+                          p: 3,
                           transition: "0.5s"
                         }}
                       />
@@ -254,21 +277,38 @@ export default function Home() {
                       <Box className="overlay" sx={{
                         position: "absolute",
                         inset: 0,
-                        bgcolor: "rgba(0,0,0,0.6)",
+                        bgcolor: "rgba(0,0,0,0.4)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         opacity: 0,
-                        transition: "0.3s"
+                        transition: "0.3s",
+                        backdropFilter: "blur(2px)"
                       }}>
-                        <IconButton component={Link} to="/products" sx={{ bgcolor: "primary.main", "&:hover": { bgcolor: "white", color: "black" } }}>
-                          <ShoppingCartIcon sx={{ color: "primary.contrastText" }} />
-                        </IconButton>
+                        <Button
+                          component={Link}
+                          to="/products"
+                          variant="contained"
+                          startIcon={<ShoppingCartIcon />}
+                          sx={{
+                            bgcolor: "primary.main",
+                            color: "primary.contrastText",
+                            fontWeight: 800,
+                            borderRadius: 10,
+                            px: 3,
+                            "&:hover": { bgcolor: "white", color: "black" }
+                          }}
+                        >
+                          View Details
+                        </Button>
                       </Box>
                     </Box>
-                    <CardContent>
-                      <Typography variant="h6" fontWeight={700} noWrap>{product.name}</Typography>
-                      <Typography variant="h6" color="primary.main" fontWeight={800}>{product.price}</Typography>
+                    <CardContent sx={{ p: 3 }}>
+                      <Typography variant="body2" color="text.secondary" fontWeight={600} fontSize={12} textTransform="uppercase" letterSpacing={1} mb={0.5}>
+                        Best Seller
+                      </Typography>
+                      <Typography variant="h6" fontWeight={800} noWrap gutterBottom title={product.name}>{product.name}</Typography>
+                      <Typography variant="h6" color="primary.main" fontWeight={900}>{product.price}</Typography>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -280,38 +320,47 @@ export default function Home() {
 
       {/* CTA SECTION */}
       <Box sx={{
-        py: 12,
+        py: { xs: 8, md: 16 },
         textAlign: "center",
-        background: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80)`,
+        background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundAttachment: "fixed"
+        backgroundAttachment: "fixed",
+        position: "relative"
       }}>
-        <Container maxWidth="md">
-          <Typography variant="h2" fontWeight={900} gutterBottom textTransform="uppercase">
-            Ready to Transform?
-          </Typography>
-          <Typography variant="h6" color="#ccc" mb={4}>
-            Join thousands of athletes who trust us for their fitness journey.
-          </Typography>
-          <Button
-            component={Link}
-            to="/signup"
-            variant="contained"
-            size="large"
-            sx={{
-              bgcolor: "primary.main",
-              color: "primary.contrastText",
-              fontWeight: 800,
-              fontSize: "1.2rem",
-              px: 6,
-              py: 2,
-              borderRadius: 0,
-              "&:hover": { bgcolor: "background.paper", color: "text.primary" }
-            }}
+        <Container maxWidth="md" sx={{ position: "relative", zIndex: 1 }}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            Get Started
-          </Button>
+            <Typography variant="h2" fontWeight={900} gutterBottom textTransform="uppercase" sx={{ fontSize: { xs: "2.5rem", md: "4rem" }, textShadow: "0 5px 15px rgba(0,0,0,0.5)" }}>
+              Ready to <span style={{ color: "#ffeb3b" }}>Transform?</span>
+            </Typography>
+            <Typography variant="h6" color="rgba(255,255,255,0.8)" mb={6} sx={{ maxWidth: 600, mx: "auto", fontSize: { xs: "1rem", md: "1.25rem" } }}>
+              Join thousands of elite athletes who trust us for their daily nutrition and training gear.
+            </Typography>
+            <Button
+              component={Link}
+              to="/signup"
+              variant="contained"
+              size="large"
+              sx={{
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+                fontWeight: 800,
+                fontSize: "1.2rem",
+                px: 6,
+                py: 2,
+                borderRadius: 50,
+                boxShadow: "0 10px 30px rgba(255, 235, 59, 0.3)",
+                "&:hover": { bgcolor: "white", color: "text.primary", transform: "scale(1.05)" },
+                transition: "all 0.3s"
+              }}
+            >
+              Get Started Now
+            </Button>
+          </motion.div>
         </Container>
       </Box>
     </Box>
