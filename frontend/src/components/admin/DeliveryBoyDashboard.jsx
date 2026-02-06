@@ -18,7 +18,8 @@ import {
   DialogActions,
   MenuItem,
   InputAdornment,
-  IconButton
+  IconButton,
+  Avatar
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +31,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import MapIcon from "@mui/icons-material/Map";
 import { useEffect, useState, useCallback } from "react";
-import api, { IMG_BASE_URL } from "../../api/api";
+import api, { IMG_BASE_URL, getImageUrl } from "../../api/api";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import OrderMap from "../common/OrderMap";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -62,6 +64,18 @@ export default function DeliveryBoyDashboard() {
   const [mapOrder, setMapOrder] = useState(null);
   const [pData, setPData] = useState({}); // Profile Data
   const [showPassword, setShowPassword] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [deleteImage, setDeleteImage] = useState(false);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setPreview(URL.createObjectURL(file));
+      setDeleteImage(false);
+    }
+  };
 
   const openEditProfile = () => {
     setPData({
@@ -78,12 +92,31 @@ export default function DeliveryBoyDashboard() {
       city: user.city || "",
       localArea: user.localArea || ""
     });
+    if (user.profileImage) {
+      setPreview(getImageUrl(user.profileImage));
+    } else {
+      setPreview(null);
+    }
+    setImageFile(null);
+    setDeleteImage(false);
     setEditProfileOpen(true);
   };
 
   const saveProfile = async () => {
     try {
-      const res = await api.put("/auth/profile", pData);
+      const data = new FormData();
+      Object.keys(pData).forEach(key => data.append(key, pData[key]));
+
+      if (imageFile) {
+        data.append("profileImage", imageFile);
+      }
+      if (deleteImage) {
+        data.append("deleteImage", "true");
+      }
+
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const res = await api.put("/auth/profile", data, config);
+
       alert("✅ Profile Updated Successfully!");
       login(res.data.user); // Update local context
       setEditProfileOpen(false);
@@ -265,7 +298,7 @@ export default function DeliveryBoyDashboard() {
                   {user.profileImage ? (
                     <Box
                       component="img"
-                      src={`${IMG_BASE_URL}${user.profileImage}`}
+                      src={getImageUrl(user.profileImage)}
                       alt="Profile"
                       sx={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover" }}
                     />
@@ -540,6 +573,38 @@ export default function DeliveryBoyDashboard() {
         </DialogTitle>
         <DialogContent sx={{ bgcolor: "background.paper", color: "text.primary", pt: 3 }}>
           <Stack spacing={3} mt={1}>
+
+            {/* Image Upload */}
+            <Box sx={{ textAlign: "center", mb: 2 }}>
+              <Box sx={{ position: "relative", display: "inline-block" }}>
+                <Avatar
+                  src={preview}
+                  sx={{
+                    width: 100, height: 100,
+                    mx: "auto",
+                    border: "3px solid",
+                    borderColor: "primary.main",
+                    bgcolor: "grey.800"
+                  }}
+                />
+                <IconButton
+                  component="label"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    bgcolor: "primary.main",
+                    color: "primary.contrastText",
+                    "&:hover": { bgcolor: "primary.dark" },
+                    boxShadow: 2
+                  }}
+                  size="small"
+                >
+                  <PhotoCamera fontSize="small" />
+                  <input type="file" hidden accept="image/*" onChange={handleImageChange} />
+                </IconButton>
+              </Box>
+            </Box>
             {/* Personal Info */}
             <Typography color="primary.main" fontWeight={700} fontSize={14}>PERSONAL INFORMATION</Typography>
             <Grid container spacing={2}>

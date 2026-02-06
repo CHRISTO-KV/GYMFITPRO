@@ -15,11 +15,11 @@ import {
   IconButton
 } from "@mui/material";
 import PrintIcon from "@mui/icons-material/Print";
-import api from "../../api/api";
+import api, { getImageUrl } from "../../api/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE = "http://localhost:5000";
+
 
 const PAYMENT_LABELS = {
   card: "Credit/Debit Card",
@@ -249,8 +249,7 @@ export default function MyOrdersUser() {
                 </Typography>
 
                 {order.items?.map(item => {
-                  const img = item.image?.replace(/^\/?uploads\//, "") || null;
-                  const imgUrl = img ? `${API_BASE}/uploads/${img}` : FALLBACK_IMG;
+                  const imgUrl = item.image ? getImageUrl(item.image) : FALLBACK_IMG;
                   const total = (item.price ?? 0) * (item.quantity ?? 1);
 
                   return (

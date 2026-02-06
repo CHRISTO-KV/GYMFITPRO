@@ -13,7 +13,7 @@ import {
     IconButton
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
-import api, { IMG_BASE_URL } from "../../api/api";
+import api, { getImageUrl } from "../../api/api";
 import { motion } from "framer-motion";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -45,7 +45,7 @@ export default function Profile() {
                 mobile: user.mobile || ""
             });
             if (user.profileImage) {
-                setPreview(`${IMG_BASE_URL}${user.profileImage}`);
+                setPreview(getImageUrl(user.profileImage));
             }
         }
     }, [user]);

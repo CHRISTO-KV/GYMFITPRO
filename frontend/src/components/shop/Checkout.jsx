@@ -19,7 +19,7 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentIcon from '@mui/icons-material/Payment';
 import LockIcon from '@mui/icons-material/Lock';
-import api, { IMG_BASE_URL } from "../../api/api";
+import api, { getImageUrl } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useState } from "react";
@@ -28,7 +28,7 @@ import { Elements, CardElement, useStripe, useElements } from "@stripe/react-str
 import stateDistricts from "../../data/indianStateDistricts";
 import { motion } from "framer-motion";
 
-const BASE_IMG = IMG_BASE_URL;
+
 import { useTheme } from "@mui/material";
 
 // Replace with your actual Publishable Key
@@ -303,7 +303,7 @@ const CheckoutForm = () => {
                   <Stack spacing={2}>
                     {validItems.map((i) => {
                       const imgFile = i.productId.images?.[0] || i.productId.image || null;
-                      const imgUrl = imgFile ? BASE_IMG + imgFile.replace(/^\/?uploads\//, "") : "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHZpZXdCb3g9IjAgMCA5MCA5MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjkwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjQ1IiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSIxMiI+Tm8gSW1nPC90ZXh0Pgo8L3N2Zz4=";
+                      const imgUrl = imgFile ? getImageUrl(imgFile) : "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHZpZXdCb3g9IjAgMCA5MCA5MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjkwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjQ1IiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSIxMiI+Tm8gSW1nPC90ZXh0Pgo8L3N2Zz4=";
                       return (
                         <Card key={i.productId._id} sx={{ display: "flex", bgcolor: "action.hover", borderRadius: 2 }}>
                           <CardMedia component="img" sx={{ width: 80, height: 80, objectFit: "cover" }} image={imgUrl} />
