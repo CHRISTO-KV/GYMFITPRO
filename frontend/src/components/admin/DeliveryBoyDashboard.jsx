@@ -477,27 +477,38 @@ export default function DeliveryBoyDashboard() {
 
                           {/* Items & Verification */}
                           <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems="center" spacing={2}>
-                            {/* Items Preview */}
-                            <Box sx={{ display: "flex", gap: 1 }}>
+                            {/* Items List */}
+                            <Stack spacing={2} sx={{ flex: 1 }}>
                               {order.items?.map((item, i) => (
-                                <Box key={i} sx={{ position: "relative" }}>
-                                  <Box
-                                    component="img"
-                                    src={item.image ? `${IMG_BASE_URL}${item.image}` : "https://via.placeholder.com/50"}
-                                    sx={{ width: 40, height: 40, borderRadius: 1, objectFit: "cover", border: "1px solid #333" }}
-                                  />
-                                  <Box sx={{
-                                    position: "absolute", bottom: -5, right: -5,
-                                    bgcolor: "primary.main", color: "primary.contrastText",
-                                    borderRadius: "50%", width: 18, height: 18,
-                                    fontSize: 10, display: "flex", alignItems: "center", justifyContent: "center",
-                                    fontWeight: "bold"
-                                  }}>
-                                    {item.quantity}
+                                <Stack key={i} direction="row" spacing={2} alignItems="center" sx={{ bgcolor: "background.default", p: 1.5, borderRadius: 2 }}>
+                                  <Box sx={{ position: "relative" }}>
+                                    <Box
+                                      component="img"
+                                      src={getImageUrl(item.image)}
+                                      alt={item.name}
+                                      sx={{ width: 60, height: 60, borderRadius: 2, objectFit: "cover", border: "1px solid", borderColor: "divider" }}
+                                    />
+                                    <Box sx={{
+                                      position: "absolute", bottom: -6, right: -6,
+                                      bgcolor: "primary.main", color: "primary.contrastText",
+                                      borderRadius: "50%", width: 22, height: 22,
+                                      fontSize: 11, display: "flex", alignItems: "center", justifyContent: "center",
+                                      fontWeight: "bold", border: "2px solid white"
+                                    }}>
+                                      {item.quantity}
+                                    </Box>
                                   </Box>
-                                </Box>
+                                  <Box>
+                                    <Typography variant="body2" fontWeight={700} color="text.primary">
+                                      {item.name}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                      ₹{item.price} x {item.quantity}
+                                    </Typography>
+                                  </Box>
+                                </Stack>
                               ))}
-                            </Box>
+                            </Stack>
 
                             {/* OTP Verification */}
                             {tabValue === 0 && (
