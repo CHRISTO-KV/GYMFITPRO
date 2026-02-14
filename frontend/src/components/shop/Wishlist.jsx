@@ -134,7 +134,7 @@ export default function Wishlist() {
                 if (!product) return null; // Safety check
 
                 return (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={product._id} component={motion.div} variants={itemVariants} layout>
+                  <Grid  size={{xs:12, sm:6, md:4, lg:3}} key={product._id} component={motion.div} variants={itemVariants} layout>
                     <Card
                       sx={{
                         bgcolor: "background.paper",
