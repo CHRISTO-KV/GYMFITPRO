@@ -104,39 +104,19 @@ router.post("/signup", async (req, res) => {
 
     let user = await User.findOne({ email });
     if (user) {
-      if (user.isVerified) {
-        return res.status(400).json({ message: "User already exists" });
-      }
-      // User exists but not verified? Resend OTP logic below.
+      return res.status(400).json({ message: "User already exists" });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
-
-    if (!user) {
-      user = new User({ fname, email, password, otp, otpExpires, isVerified: false });
-    } else {
-      // Update unverified user with new details/OTP
-      user.fname = fname;
-      user.password = password;
-      user.otp = otp;
-      user.otpExpires = otpExpires;
-    }
+    user = new User({
+      fname,
+      email,
+      password,
+      isVerified: true // No OTP required
+    });
 
     await user.save();
 
-    console.log("==========================================");
-    console.log(`[DEV MODE] OTP for ${email}: ${otp}`);
-    console.log("==========================================");
-
-    // Attempt to send email but don't fail if it fails (just log error)
-    try {
-      await sendEmail(email, "Your OTP Code", `Your verification code is: ${otp}`);
-    } catch (emailErr) {
-      console.error("Email send failed (ignored for dev):", emailErr.message);
-    }
-
-    res.status(200).json({ message: "OTP sent (check console)", userId: user._id });
+    res.status(200).json({ message: "Signup successful", userId: user._id });
   } catch (err) {
     console.error("Signup Error:", err);
     res.status(400).json({ message: "Signup failed", error: err.message });
