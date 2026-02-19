@@ -102,7 +102,7 @@ export default function MyOrdersUser() {
         <body>
           <div class="header">
             <div>
-              <div class="logo">GYM GEAR PRO</div>
+              <div class="logo">GYM FIT PRO</div>
               <div style="margin-top: 10px;">INVOICE</div>
             </div>
             <div style="text-align: right;">
